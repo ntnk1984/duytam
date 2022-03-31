@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import HeaderAuth from '../../components/authUser/HeaderAuth';
 import MyInput from '../../components/MyInput';
@@ -7,6 +7,7 @@ import {MyColor} from '../../assets/colors';
 import MyButton from '../../components/MyButton';
 
 const ForgotPasswordVerificationScreen = ({navigation}) => {
+  const [username, setUsername] = useState('');
   const handleCommit = () => {
     navigation.navigate('ForgotPasswordEnterCode');
   };
@@ -20,6 +21,8 @@ const ForgotPasswordVerificationScreen = ({navigation}) => {
       </View>
       <View style={styles.sectionForm}>
         <MyInput
+          value={username}
+          onChangeText={value => setUsername(value)}
           icon={
             <MaterialCommunityIcons
               name="account"

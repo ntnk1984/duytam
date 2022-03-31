@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import HeaderAuth from '../../components/authUser/HeaderAuth';
 import MyInput from '../../components/MyInput';
@@ -7,6 +7,7 @@ import {MyColor} from '../../assets/colors';
 import MyButton from '../../components/MyButton';
 
 const ForgotPasswordEnterCodeScreen = ({navigation}) => {
+  const [codeInput, setCodeInput] = useState('');
   const handleCommit = () => {
     navigation.navigate('ForgotPasswordNewPassword');
   };
@@ -21,28 +22,28 @@ const ForgotPasswordEnterCodeScreen = ({navigation}) => {
       </View>
       <View style={styles.sectionForm}>
         <MyInput
+          value={codeInput}
+          onChangeText={value => setCodeInput(value)}
           keyboardType="numeric"
           styleTextInput={styles.input}
           maxLength={6}
-          icon={
-            <MaterialCommunityIcons
-              name="account"
-              size={20}
-              color={MyColor.primary}
-            />
-          }
           label={'Mã xác thực'}
           placeholder={'Ex: 123456'}
         />
+        <Text style={styles.textRePass}>Gửi lại mã xác nhận (10s)</Text>
         <MyButton onPress={handleCommit} title={'Xác thực'} />
       </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
+  textRePass: {
+    marginTop: 7,
+    color: MyColor.primary,
+  },
   input: {
     textAlign: 'center',
-    color: 'red',
+    color: '#000',
   },
   textSub: {
     fontSize: 16,

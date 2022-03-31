@@ -9,13 +9,17 @@ import MyButton from '../components/MyButton';
 const LoginScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  // await axiosInstance.post('/api/Account/Login', data);
-
   const handleRegister = () => {
     navigation.navigate('Register');
   };
   const handleLogin = async () => {
     // const res = await login(username, password);
+    // const data = {
+    //   username: username,
+    //   password: password,
+    // };
+    // const res = await axiosInstance.post('/auth/login', data);
+    // console.log('res', res);
     navigation.navigate('MainBottomTab');
   };
   return (
@@ -51,13 +55,13 @@ const LoginScreen = ({navigation}) => {
         />
         <TouchableOpacity
           onPress={() => navigation.navigate('ForgotPasswordNavigation')}>
-          <Text style={styles.forgotText}>Quên mật khẩu ?</Text>
+          <Text style={styles.forgotText}>Quên mật khẩu?</Text>
         </TouchableOpacity>
         <MyButton onPress={handleLogin} title={'Đăng nhập'} />
       </View>
       <View style={styles.sectionFooter}>
         <View style={styles.registerContainer}>
-          <Text>Chưa có tài khoản ?</Text>
+          <Text>Chưa có tài khoản?</Text>
           <TouchableOpacity onPress={handleRegister}>
             <Text style={styles.textRegister}> Đăng ký ngay!</Text>
           </TouchableOpacity>

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Text, View, StyleSheet, TextInput} from 'react-native';
 import {MyColor} from '../assets/colors';
 import {Entypo} from '@expo/vector-icons';
+import * as Animatable from 'react-native-animatable';
 const MyInput = ({
   label,
   isPassword,
@@ -10,16 +11,33 @@ const MyInput = ({
   icon,
   iconRight,
   styleTextInput,
+  isError,
+  labelError,
   ...propsInput
 }) => {
   const [isSecure, setIsSecure] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
   return (
     <View style={[styles.container, styleContainer]}>
       <Text>{label}</Text>
-      <View style={[styles.textInputContainer, {borderColor: MyColor.primary}]}>
+      <View
+        style={[
+          styles.textInputContainer,
+          {
+            borderColor: isFocused ? MyColor.primary : MyColor.greenLight,
+          },
+        ]}>
         {icon && <View style={styles.icon}>{icon}</View>}
         <TextInput
           {...propsInput}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           secureTextEntry={isPassword ? isSecure : false}
           placeholder={placeholder}
           style={[styles.textInput, styleTextInput]}
@@ -35,10 +53,20 @@ const MyInput = ({
           </View>
         )}
       </View>
+      {isError && labelError && (
+        <Animatable.View animation={'fadeInLeft'} duration={500}>
+          <Text style={styles.textError}>{labelError}</Text>
+        </Animatable.View>
+      )}
     </View>
   );
 };
 const styles = StyleSheet.create({
+  textError: {
+    marginTop: 7,
+    fontSize: 12,
+    color: '#ff1b1b',
+  },
   icon: {
     marginRight: 8,
   },
@@ -55,6 +83,7 @@ const styles = StyleSheet.create({
   textInput: {
     fontSize: 16,
     flex: 1,
+    marginRight: 8,
   },
   container: {},
 });

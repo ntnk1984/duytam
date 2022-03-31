@@ -1,14 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, StyleSheet, ScrollView} from 'react-native';
 import MyInput from '../components/MyInput';
 import {AntDesign, MaterialCommunityIcons, Feather} from '@expo/vector-icons';
 import {MyColor} from '../assets/colors';
 import MyButton from '../components/MyButton';
+import axiosInstance from '../utils/axios';
 const RegisterScreen = ({navigation}) => {
-  const handleRegister = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [rePassword, setRePassword] = useState('');
+  const handleRegister = async () => {
     // register
     //....
-
+    const data = {
+      username: username,
+      password: password,
+      email: 'testzza@example.com',
+      first_name: 'string',
+      last_name: 'string',
+    };
+    const res = await axiosInstance.post('/auth/register', data);
+    console.log(res);
     // navigation
     navigation.goBack();
   };
@@ -33,6 +45,8 @@ const RegisterScreen = ({navigation}) => {
       </View>
       <View style={styles.sectionForm}>
         <MyInput
+          value={username}
+          onChangeText={value => setUsername(value)}
           icon={
             <MaterialCommunityIcons
               name="account"
@@ -44,6 +58,8 @@ const RegisterScreen = ({navigation}) => {
           label={'Mã khách hàng/ Số điện thoại'}
         />
         <MyInput
+          value={password}
+          onChangeText={value => setPassword(value)}
           icon={<Feather name="lock" size={20} color={MyColor.primary} />}
           placeholder={'.......'}
           styleContainer={styles.textInput}
@@ -51,13 +67,19 @@ const RegisterScreen = ({navigation}) => {
           isPassword={true}
         />
         <MyInput
+          value={rePassword}
+          onChangeText={value => setRePassword(value)}
           icon={<Feather name="lock" size={20} color={MyColor.primary} />}
           placeholder={'.......'}
           styleContainer={styles.textInput}
           label={'Xác nhận mật khẩu'}
           isPassword={true}
         />
-        <MyButton styleContainer={styles.button} title={'Đăng ký'} />
+        <MyButton
+          onPress={handleRegister}
+          styleContainer={styles.button}
+          title={'Đăng ký'}
+        />
       </View>
     </ScrollView>
   );
